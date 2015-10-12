@@ -33,7 +33,6 @@ f = feedparser.parse(feed)
 for entry in f.entries:
     author = entry['author']
     if author.find(" ") == -1 and not seen.has_key(entry.link):
-        print("'" + author + "'")
         comments.insert(0, PyRSS2Gen.RSSItem(
             title = entry.title,
             link = entry.link,
