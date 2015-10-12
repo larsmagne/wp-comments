@@ -26,8 +26,7 @@ def rssEntry(entry):
 
 # First read the cached comments from previous runs.
 if os.path.isfile(output):
-    o = feedparser.parse(output)
-    for entry in o.entries:
+    for entry in feedparser.parse(output).entries:
         seen[entry.link] = True
         comments.append(rssEntry(entry))
 
