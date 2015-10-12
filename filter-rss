@@ -16,29 +16,27 @@ output = sys.argv[2]
 comments = []
 seen = {}
 
+def rssEntry(entry):
+    return PyRSS2Gen.RSSItem(
+        title = entry.title,
+        link = entry.link,
+        description = entry.description,
+        guid = entry.guid,
+        pubDate = entry.published)
+
 # First read the cached comments from previous runs.
 if os.path.isfile(output):
     o = feedparser.parse(output)
     for entry in o.entries:
         seen[entry.link] = True
-        comments.append(PyRSS2Gen.RSSItem(
-            title = entry.title,
-            link = entry.link,
-            description = entry.description,
-            guid = entry.guid,
-            pubDate = entry.published))
+        comments.append(rssEntry(entry))
 
 # Then add any new entries from Wordpress.
 f = feedparser.parse(feed)
 for entry in f.entries:
     author = entry['author']
     if author.find(" ") == -1 and not seen.has_key(entry.link):
-        comments.insert(0, PyRSS2Gen.RSSItem(
-            title = entry.title,
-            link = entry.link,
-            description = entry.description,
-            guid = entry.guid,
-            pubDate = entry.published))
+        comments.insert(0, rssEntry(entry))
 
 rss = PyRSS2Gen.RSS2(
     title = f.feed.title,
