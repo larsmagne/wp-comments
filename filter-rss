@@ -33,7 +33,7 @@ if os.path.isfile(output):
 # Then add any new entries from Wordpress.
 f = feedparser.parse(feed)
 for entry in f.entries:
-    if entry.author.find(" ") == -1 and not seen.has_key(entry.link):
+    if entry.author.find("Random Thoughts") == -1 and not seen.has_key(entry.link):
         comments.insert(0, rssEntry(entry))
 
 rss = PyRSS2Gen.RSS2(
