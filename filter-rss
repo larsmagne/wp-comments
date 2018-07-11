@@ -25,10 +25,13 @@ def rssEntry(entry):
         pubDate = entry.published)
 
 # First read the cached comments from previous runs.
+count = 0
 if os.path.isfile(output):
     for entry in feedparser.parse(output).entries:
-        seen[entry.link] = True
-        comments.append(rssEntry(entry))
+        count = count + 1
+        if count < 20:
+            seen[entry.link] = True
+            comments.append(rssEntry(entry))
 
 # Then add any new entries from Wordpress.
 f = feedparser.parse(feed)
