@@ -29,7 +29,7 @@ count = 0
 if os.path.isfile(output):
     for entry in feedparser.parse(output).entries:
         count = count + 1
-        if count < 20:
+        if count < 15:
             seen[entry.link] = True
             comments.append(rssEntry(entry))
 
